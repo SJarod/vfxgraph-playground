@@ -51,7 +51,7 @@ void CSMain(uint3 id : SV_GroupThreadID, uint3 groupId : SV_GroupID)
     {
         float4 color = 0.0;
         
-        for (int i = id.x - 2; i <= id.x + 2; ++i)
+        for (int i = (int) id.x - 2; i <= (int) id.x + 2; ++i)
             color += GetColorFromLDS(uint2(i, id.y));
     
         SetColorToLDS(id.xy, color * 0.2);
@@ -65,7 +65,7 @@ void CSMain(uint3 id : SV_GroupThreadID, uint3 groupId : SV_GroupID)
     {
         float4 color = 0.0;
         
-        for (int j = id.y - 2; j <= id.y + 2; ++j)
+        for (int j = (int) id.y - 2; j <= (int) id.y + 2; ++j)
             color += GetColorFromLDS(uint2(id.x, j));
 
         Result[outId] = color * 0.2;
