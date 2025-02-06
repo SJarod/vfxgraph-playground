@@ -1081,7 +1081,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: True
+      m_SerializableObject: False
     m_Space: -1
   m_Property:
     name: _vfx_enabled
@@ -1139,7 +1139,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 1
+      m_SerializableObject: 0.5
     m_Space: -1
   m_Property:
     name: dragCoefficient
@@ -1379,7 +1379,7 @@ MonoBehaviour:
   attribute: size
   Composition: 0
   Source: 0
-  Random: 2
+  Random: 1
   channels: 6
 --- !u!114 &8926484042661615034
 MonoBehaviour:
@@ -2272,7 +2272,7 @@ MonoBehaviour:
       inputSlot: {fileID: 8926484042661615044}
     - outputSlot: {fileID: 8926484042661615067}
       inputSlot: {fileID: 8926484042661615109}
-    position: {x: 68, y: 2136.8}
+    position: {x: 21.6, y: 2243.2}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
@@ -2902,7 +2902,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615118}
       inputSlot: {fileID: 8926484042661615120}
-    position: {x: 41.600002, y: 2334.4}
+    position: {x: 57.600002, y: 2435.2}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
