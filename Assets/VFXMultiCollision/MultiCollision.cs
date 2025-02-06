@@ -24,6 +24,11 @@ public class MultiCollision : MonoBehaviour
         data = new Vector4[colliders.Length];
     }
 
+    private void OnDisable()
+    {
+        graphicsBuffer.Dispose();
+    }
+
     void Update()
     {
         for (int i = 0; i < colliders.Length; ++i)
