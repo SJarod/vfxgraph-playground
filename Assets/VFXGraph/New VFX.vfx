@@ -56,8 +56,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: -626
     y: -1806
-    width: 2867
-    height: 3896
+    width: 2842
+    height: 3870
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2827,7 +2827,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615009}
   m_ExposedName: Sphere
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 0
   m_Category: 
   m_Min:
     m_Type:

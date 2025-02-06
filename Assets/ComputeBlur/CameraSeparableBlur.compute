@@ -1,0 +1,74 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// group shared (Local Data Share)
+groupshared float lds_cacheR[64];
+groupshared float lds_cacheG[64];
+groupshared float lds_cacheB[64];
+groupshared float lds_cacheA[64];
+
+// uniforms
+int width;
+int height;
+
+Texture2D<float4> Input;
+RWTexture2D<float4> Result;
+
+float4 GetColorFromLDS(uint2 id)
+{
+    uint index = id.x + id.y * 8;
+    return float4(lds_cacheR[index], lds_cacheG[index], lds_cacheB[index], lds_cacheA[index]);
+}
+
+void SetColorToLDS(uint2 id, float4 color)
+{
+    uint index = id.x + id.y * 8;
+    lds_cacheR[index] = color.r;
+    lds_cacheG[index] = color.g;
+    lds_cacheB[index] = color.b;
+    lds_cacheA[index] = color.a;
+}
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_GroupThreadID, uint3 groupId : SV_GroupID)
+{
+    // generate coords
+    uint x = id.x - 2;
+    uint y = id.y - 2;
+
+    uint2 outId = (groupId.xy * 4) + uint2(x, y);
+    uint2 inId = outId;
+    inId = clamp(inId, 0, uint2(width - 1, height - 1));
+
+    // cache color to LDS
+    SetColorToLDS(id.xy, Input[inId]);
+    
+    // thread lock : wait for LDS to be written
+    GroupMemoryBarrierWithGroupSync();
+    
+    // horizontal blur, on *all the lines* so it's taken into account for the vertical blur
+    if (id.x > 1 && id.x < 6)
+    {
+        float4 color = 0.0;
+        
+        for (int i = id.x - 2; i <= id.x + 2; ++i)
+            color += GetColorFromLDS(uint2(i, id.y));
+    
+        SetColorToLDS(id.xy, color * 0.2);
+    }
+    
+    // memory barrier
+    GroupMemoryBarrierWithGroupSync();
+    
+    // vertical blur, writes to output
+    if (id.x > 1 && id.y > 1 && id.x < 6 && id.y < 6)
+    {
+        float4 color = 0.0;
+        
+        for (int j = id.y - 2; j <= id.y + 2; ++j)
+            color += GetColorFromLDS(uint2(id.x, j));
+
+        Result[outId] = color * 0.2;
+    }
+    
+}
